@@ -1,44 +1,82 @@
-/**
- * SYST 17796 Project Base code.
- * Students can modify and extend to implement their game.
- * Add your name as an author and the date!
- */
 package ca.sheridancollege.project;
 
-/**
- * A class that models each Player in the game. Players have an identifier, which should be unique.
- *
- * @author dancye
- * @author Paul Bonenfant Jan 2020
- */
-public abstract class Player {
+import java.util.ArrayList;
+
+public class Player {
 
     private String name;
-	private ArrayList<Card> hand; //the unique name for this player
+    private ArrayList<Card> hand = new ArrayList<Card>();
 
-    /**
-     * A constructor that allows you to set the player's unique ID
-     *
-     * @param name the unique ID to assign to this player.
-     */
     public Player(String name) {
         this.name = name;
     }
 
-    /**
-     * The method to be overridden when you subclass the Player class with your specific type of Player and filled in
-     * with logic to play your game.
-     */
-    public abstract void play();
+    public void Hit() {
+        hand.add(GroupOfCards.getCard());
+    }
 
-	public void Hit() {
-		// TODO - implement Player.Hit
-		throw new UnsupportedOperationException();
-	}
+    public String getPlayerName() {
+        return this.name;
+    }
 
-	public void Stand() {
-		// TODO - implement Player.Stand
-		throw new UnsupportedOperationException();
-	}
+    public String getCard(int index) {
+        Card card = hand.get(index);
+        String a = String.valueOf(card.getValue());
+        String b = card.getSuit();
+        switch (a) {
+            case "1":
+                a = "Ace";
+                break;
+            case "11":
+                a = "Jack";
+                break;
+            case "12":
+                a = "Queen";
+                break;
+            case "13":
+                a = "King";
+                break;
+            default:
+                break;
+        }
+
+        String cardString = a + " of " + b;
+
+        return cardString;
+    }
+
+    public int handLength() {
+        return hand.size();
+    }
+
+    public int handValue() {
+        int handValue = 0;
+        int cardValue;
+        int numOfAces = 0;
+        for (int z = 0; z < handLength(); z++) {
+
+            cardValue = hand.get(z).getValue();
+
+            if (cardValue == 1) {
+                numOfAces++;
+                cardValue = 11;
+            } else if (cardValue == 11) {
+                cardValue = 10;
+            } else if (cardValue == 12) {
+                cardValue = 10;
+            } else if (cardValue == 13) {
+                cardValue = 10;
+            }
+
+            handValue += cardValue;
+
+            while (handValue > 21 && numOfAces > 0) {
+                numOfAces--;
+                handValue -= 10;
+            }
+        }
+
+        return handValue;
+    }
 
 }

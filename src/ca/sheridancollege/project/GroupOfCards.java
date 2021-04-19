@@ -1,55 +1,59 @@
-/**
- * SYST 17796 Project Base code.
- * Students can modify and extend to implement their game.
- * Add your name as an author and the date!
- */
 package ca.sheridancollege.project;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
-/**
- * A concrete class that represents any grouping of cards for a Game. HINT, you might want to subclass this more than
- * once. The group of cards has a maximum size attribute which is flexible for reuse.
- *
- * @author dancye
- * @author Paul Bonenfant Jan 2020
- */
 public class GroupOfCards {
 
-    //The group of cards, stored in an ArrayList
-    private ArrayList<Card> cards;
-    private int size;//the size of the grouping
+    private static ArrayList<Card> deckOfCards = new ArrayList<Card>();
 
-    public GroupOfCards(int size) {
-        this.size = size;
+    public void createDeck() {
+        deckOfCards.clear();
+        for (int x = 0; x < 4; x++) {
+
+            for (int y = 1; y < 14; y++) {
+
+                Card card;
+
+                switch (x) {
+                    case 0:
+                        card = new Card("Hearts", y);
+                        deckOfCards.add(card);
+                        break;
+                    case 1:
+                        card = new Card("Spades", y);
+                        deckOfCards.add(card);
+                        break;
+                    case 2:
+                        card = new Card("Clubs", y);
+                        deckOfCards.add(card);
+                        break;
+                    case 3:
+                        card = new Card("Diamonds", y);
+                        deckOfCards.add(card);
+                        break;
+                }
+            }
+        }
+        shuffle();
+        shuffle();
+        shuffle();
     }
 
-    /**
-     * A method that will get the group of cards as an ArrayList
-     *
-     * @return the group of cards.
-     */
-    public ArrayList<Card> getCards() {
-        return cards;
+    public static Card getCard() {
+        Random rand = new Random();
+        int randomNum = rand.nextInt(deckOfCards.size());
+        Card card = deckOfCards.get(randomNum);
+        deckOfCards.remove(randomNum);
+        shuffle();
+        shuffle();
+        shuffle();
+        return card;
     }
 
-    public void shuffle() {
-        Collections.shuffle(cards);
+    public static void shuffle() {
+        Collections.shuffle(deckOfCards);
     }
 
-    /**
-     * @return the size of the group of cards
-     */
-    public int getSize() {
-        return size;
-    }
-
-    /**
-     * @param size the max size for the group of cards
-     */
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-}//end class
+}
