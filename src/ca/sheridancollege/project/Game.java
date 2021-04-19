@@ -1,6 +1,7 @@
 package ca.sheridancollege.project;
 
 import java.util.Scanner;
+import static junit.framework.Assert.assertEquals;
 
 public class Game {
 
@@ -12,7 +13,6 @@ public class Game {
     static int dealerWins = 0;
 
     public static void main(String args[]) {
-        deck.createDeck();
         System.out.println("Hello, Welcome to our blackjack game! What is your name? ");
         Scanner s = new Scanner(System.in);
 
@@ -27,6 +27,7 @@ public class Game {
         }
         String a = "";
         while (!a.toLowerCase().contains("no")) {
+            deck.createDeck();
             x = 0;
 
             begin();

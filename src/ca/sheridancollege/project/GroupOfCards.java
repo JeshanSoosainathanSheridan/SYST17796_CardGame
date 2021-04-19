@@ -8,7 +8,7 @@ public class GroupOfCards {
 
     private static ArrayList<Card> deckOfCards = new ArrayList<Card>();
 
-    public void createDeck() {
+    public static void createDeck() {
         deckOfCards.clear();
         for (int x = 0; x < 4; x++) {
 
@@ -52,8 +52,9 @@ public class GroupOfCards {
         return card;
     }
 
-    public static void shuffle() {
+    public static boolean shuffle() {
         Collections.shuffle(deckOfCards);
+        return true;
     }
 
 }
